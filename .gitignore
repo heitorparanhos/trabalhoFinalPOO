@@ -1,0 +1,15 @@
+# Bytecode Java
+*.class
+
+# Pacotes compilados
+*.jar
+*.war
+
+# Arquivos de IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# macOS
+.DS_Store
