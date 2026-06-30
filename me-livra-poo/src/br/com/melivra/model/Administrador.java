@@ -1,11 +1,18 @@
 package br.com.melivra.model;
 
+import br.com.melivra.exception.CampoObrigatorioException;
+
 /**
  * Representa um administrador do sistema Me Livra.
- * Possui todos os atributos de um Usuario e, adicionalmente,
- * pode remover conteúdo impróprio da plataforma.
+ *
+ * <p>Possui todos os atributos de um {@link Usuario} e, adicionalmente, o papel
+ * de moderação: pode sinalizar e remover conteúdo impróprio da plataforma
+ * (posts, comentários e anúncios). A remoção efetiva é delegada ao repositório
+ * central, mantendo o administrador como autor lógico da ação.</p>
  */
 public class Administrador extends Usuario {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Cria um novo administrador.
@@ -13,40 +20,30 @@ public class Administrador extends Usuario {
      * @param nome  nome completo
      * @param email e-mail de acesso
      * @param senha senha de acesso
+     * @throws CampoObrigatorioException se algum campo obrigatório for vazio
      */
-    public Administrador(String nome, String email, String senha) {
+    public Administrador(String nome, String email, String senha)
+            throws CampoObrigatorioException {
         super(nome, email, senha);
     }
 
-    // -------------------------------------------------------------------------
-    // Implementação do método abstrato
-    // -------------------------------------------------------------------------
-
+    /** {@inheritDoc} */
     @Override
     public String getTipo() {
         return "Administrador";
     }
 
-    // -------------------------------------------------------------------------
-    // Métodos de negócio
-    // -------------------------------------------------------------------------
-
     /**
-     * Remove um conteúdo impróprio da plataforma.
-     * Implementação simplificada: a remoção efetiva é delegada ao SistemaMeLivra.
-     * Este método registra a intenção de moderação.
+     * Registra a intenção de moderação sobre um conteúdo. A exclusão real é
+     * executada pelo repositório central ({@code SistemaMeLivra}).
      *
-     * @param conteudo objeto a ser removido (Post, Comentario ou Anuncio)
+     * @param conteudo entidade a ser moderada (Post, Comentario ou Anuncio)
+     * @return mensagem de auditoria da ação de moderação
      */
-    public void removerConteudo(Object conteudo) {
-        // Implementação simplificada — a remoção real ocorre via SistemaMeLivra
-        System.out.println("[MODERAÇÃO] Administrador '" + getNome()
-                + "' sinalizou remoção de conteúdo: " + conteudo);
+    public String moderar(Identificavel conteudo) {
+        return String.format("[MODERAÇÃO] %s removeu %s #%d.",
+                getNome(), conteudo.getTipoEntidade(), conteudo.getId());
     }
-
-    // -------------------------------------------------------------------------
-    // toString
-    // -------------------------------------------------------------------------
 
     @Override
     public String toString() {
