@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: br.com.melivra.Main
+Implementation-Title: Me Livra
+Implementation-Version: 1.0

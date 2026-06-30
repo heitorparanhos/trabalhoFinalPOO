@@ -5,6 +5,16 @@
 *.jar
 *.war
 
+# Saída de build e artefatos de execução
+build/
+dist/
+me-livra-poo/build/
+me-livra-poo/dist/
+
+# Dados persistidos em tempo de execução (gerados pela aplicação)
+dados/
+me-livra-poo/dados/
+
 # Arquivos de IDE
 .idea/
 *.iml
